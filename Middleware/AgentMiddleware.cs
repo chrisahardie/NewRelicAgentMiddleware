@@ -49,7 +49,7 @@ namespace NewRelicAgentMiddleware.Middleware
             // the unique hostname to the application name
             var appName = $"{options.AppName}-{Dns.GetHostName()}";
             // If we fail to initialize the agent, disable the middleware
-            var success = agentSdk.Init(options.LicenseKey, options.AppName, options.Language, options.LanguageVersion);
+            var success = agentSdk.Init(options.LicenseKey, appName, options.Language, options.LanguageVersion);
             if (!success)
             {
                 isEnabled = false;
