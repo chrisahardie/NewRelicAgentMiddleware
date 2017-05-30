@@ -110,7 +110,7 @@ to New Relic
 
 Add the following import statement:
 
-`import NewRelicAgentMiddleware.Extensions;`
+`using NewRelicAgentMiddleware.Extensions;`
 
 Configure the middleware for dependency injection, and add the middleware to the processing pipeline:
 
