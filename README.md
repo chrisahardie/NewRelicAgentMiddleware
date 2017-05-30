@@ -49,7 +49,8 @@ The middleware will expect the following configuration segment in the `appsettin
     "licenseKey": "YOUR_KEY",
     "appName": "YOUR_APP_NAME",
     "language": "CSharp",
-    "languageVersion": "7"
+    "languageVersion": "7",
+	"libraryPath": "/lib/x86_64-linux-gnu"
   }
 ```
 
@@ -60,6 +61,7 @@ The middleware will expect the following configuration segment in the `appsettin
 | appName         | Name of the app, note this will have its hosts hostname appended to ensure uniqueness |
 | language        | Programming language used                                                             |
 | languageVersion | Version of programming language used                                                  |
+| libraryPath     | The path to the folder where you copied the New Relic shared libraries                |
 
 ### Declare mappings
 
