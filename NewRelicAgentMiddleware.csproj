@@ -3,6 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	<Version>1.0.1</Version>
+	<Authors>Chris Hardie</Authors>
+	<Company>Chris Hardie</Company>
+	<Description>ASP.Net core middleware that leverages the New Relic beta SDK</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -106,6 +106,8 @@ to New Relic
     ]
   },
   ...
+  
+* Ensure you **always** copy this file to the output directory.
 ```
 
 ### Edit Startup.cs

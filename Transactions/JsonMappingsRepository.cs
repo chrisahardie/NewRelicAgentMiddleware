@@ -11,7 +11,7 @@ namespace NewRelicAgentMiddleware.Transactions
     /// </summary>
     internal class JsonMappingsRepository : IMappingsRepository
     {
-        private IEnumerable<ActionMapping> mappings;
+        private IEnumerable<ActionMapping> mappings = new List<ActionMapping>();
         private string mappingsFileDirectory = Path.Combine($"{AppContext.BaseDirectory}", "Mappings");
         private string mappingsFileName = "mappings.json";
         private FileSystemWatcher fileSystemWatcher;
@@ -38,8 +38,11 @@ namespace NewRelicAgentMiddleware.Transactions
             try
             {
                 var path = GetPathToMappingJson();
-                var json = File.ReadAllText(path);
-                mappings = JsonConvert.DeserializeObject<IEnumerable<ActionMapping>>(json);
+                if (File.Exists(path))
+                {
+                    var json = File.ReadAllText(path);
+                    mappings = JsonConvert.DeserializeObject<IEnumerable<ActionMapping>>(json);
+                }
             }
             catch (FileNotFoundException exc)
             {
@@ -67,10 +70,6 @@ namespace NewRelicAgentMiddleware.Transactions
             callback(Get());
         }
 
-        /// <summary>
-        /// Probably want to implement this better when we figure out how we're managing the JSON...
-        /// </summary>
-        /// <returns>Filesystem path to json mapping document</returns>
         private string GetPathToMappingJson()
         {
             return Path.Combine(mappingsFileDirectory, mappingsFileName);
