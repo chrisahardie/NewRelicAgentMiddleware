@@ -50,7 +50,7 @@ namespace NewRelicAgentMiddleware.Transactions
             // We will default the transaction label to the request path. If 
             // an appropriate mapping in the consuming application's mapping.json
             // file is found, the label found therein will take precedence
-            var label = requestPath;
+            var label = requestPath.ToLower();
             
             var actionRouteName = $"{controller}/{action}";
 
