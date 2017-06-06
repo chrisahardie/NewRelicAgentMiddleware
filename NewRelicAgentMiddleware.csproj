@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-	<Version>1.0.3</Version>
+	<Version>1.0.4</Version>
 	<Authors>Chris Hardie</Authors>
 	<Company>Chris Hardie</Company>
 	<Description>ASP.Net core middleware that leverages the New Relic beta SDK</Description>

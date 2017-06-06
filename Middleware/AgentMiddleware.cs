@@ -19,15 +19,11 @@ namespace NewRelicAgentMiddleware.Middleware
         private readonly ILogger<AgentMiddleware> logger;
         private readonly IAgentSdk agentSdk;
         private readonly NewRelicOptions options;
+        private bool isEnabled;
         // The following is completely arbitrary, presently the logger
         // requires an event id if you want to log an exception
         private const int errorEventId = 1000;
-
-        // For ease of dev/testing, we return a stub if we're working on Windows.
-        // Eventually we may want to instead simply invoke the next middleware in the chain
-        // and be done with it.
-        private bool isEnabled;
-
+        
         public AgentMiddleware(RequestDelegate next, ILogger<AgentMiddleware> logger, IAgentSdk agentSdk, IOptions<NewRelicOptions> optionsAccessor, bool isEnabled = true)
         {
             this.next = next;
