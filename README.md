@@ -39,30 +39,6 @@ ln -s /lib64/libcrypto.so.10 /lib64/libcrypto.so.1.0.0
 
 > Install-Package NewRelicAgentMiddleware
 
-### Update appsettings.json
-
-The middleware will expect the following configuration segment in the `appsettings.json` file:
-
-```
-"newRelic": {
-    "enabled": "true",
-    "licenseKey": "YOUR_KEY",
-    "appName": "YOUR_APP_NAME",
-    "language": "CSharp",
-    "languageVersion": "7",
-	"libraryPath": "/lib/x86_64-linux-gnu"
-  }
-```
-
-| Setting         | Value |
-| --------------- |:-------------:                                                                        |
-| enabled         | Enables or disables the middleware                                                    |
-| licenseKey      | New Relic account license key                                                         |
-| appName         | Name of the app, note this will have its hosts hostname appended to ensure uniqueness |
-| language        | Programming language used                                                             |
-| languageVersion | Version of programming language used                                                  |
-| libraryPath     | The path to the folder where you copied the New Relic shared libraries                |
-
 ### Declare mappings
 
 The middleware has no access to the controller or action context, so we must explicitly map an action that's been overloaded to separate transactions e.g.:
@@ -110,7 +86,7 @@ to New Relic
 * Ensure you **always** copy this file to the output directory.
 ```
 
-### Edit Startup.cs
+### Edit Startup.cs (configured appsettings.json)
 
 Add the following import statement:
 
@@ -145,5 +121,52 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerF
 
 ```
 
+#### Update appsettings.json 
+
+The middleware will expect the following configuration segment in the `appsettings.json` file:
+
+```
+"newRelic": {
+    "enabled": "true",
+    "licenseKey": "YOUR_KEY",
+    "appName": "YOUR_APP_NAME",
+    "language": "CSharp",
+    "languageVersion": "7",
+	"libraryPath": "/lib/x86_64-linux-gnu"
+  }
+```
+
+| Setting         | Value |
+| --------------- |:-------------:                                                                        |
+| enabled         | Enables or disables the middleware                                                    |
+| licenseKey      | New Relic account license key                                                         |
+| appName         | Name of the app, note this will have its hosts hostname appended to ensure uniqueness |
+| language        | Programming language used                                                             |
+| languageVersion | Version of programming language used                                                  |
+| libraryPath     | The path to the folder where you copied the New Relic shared libraries                |
+
 With your API application configured as above, request that are mapped in the `mappings.json` document
 should be reported as transactions to New Relic after a few minutes.
+
+### Edit Startup.cs (configuration written inline)
+
+Adjust `ConfigureServices` to configure the agent with an inline options object:
+
+```
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddOptions();
+
+    services.AddNewRelicServices(options =>
+    {
+        options.LicenseKey = "fe182d6b03fc404b64f4180e3cc811796948f0ce";
+        options.Enabled = true;
+        options.AppName = "NEWRELIC_SDK_LOAD_TEST";
+        options.Language = "CSharp";
+        options.LanguageVersion = "7";
+        options.LibraryPath = "/lib/x86_64-linux-gnu";
+    });
+    // Add framework services.
+    services.AddMvc();
+}
+```
